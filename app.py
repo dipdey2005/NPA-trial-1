@@ -14,28 +14,32 @@ st.markdown("""
         background-color: #eef1f7 !important;
         font-family: 'Segoe UI', sans-serif;
     }
+
     h1 {
         font-size: 2.6rem;
         font-weight: 800;
-        color: #111;
+        color: #000; /* changed to black */
         text-align: center;
         margin-bottom: 0.2em;
     }
+
     h4 {
         font-size: 1rem;
         font-weight: 500;
         text-align: center;
-        color: #4472c4;
+        color: #000; /* changed to black */
         margin-top: -10px;
-        margin-bottom: 2em;
+        margin-bottom: 2.5em;
     }
+
     .stContainer {
         background: white !important;
         border-radius: 16px;
         box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-        padding: 2rem 2rem 2.5rem 2rem;
+        padding: 2rem 2rem 3rem 2rem;
         margin: auto;
     }
+
     .section-header {
         font-size: 1.3rem;
         font-weight: 700;
@@ -44,6 +48,7 @@ st.markdown("""
         display: flex;
         align-items: center;
     }
+
     .section-header:before {
         content: '';
         display: inline-block;
@@ -53,6 +58,7 @@ st.markdown("""
         border-radius: 2px;
         margin-right: 10px;
     }
+
     .stTextInput > div > input, .stSelectbox > div {
         border: 1px solid #ddd !important;
         border-radius: 8px !important;
@@ -60,11 +66,13 @@ st.markdown("""
         background-color: #f9fafa !important;
         font-size: 1rem;
     }
+
     label {
         font-weight: 600 !important;
         font-size: 0.95rem !important;
         color: #333 !important;
     }
+
     .stButton > button {
         background-color: #1f77b4;
         color: white;
@@ -73,9 +81,10 @@ st.markdown("""
         height: 3em;
         font-size: 1.1em;
         font-weight: 600;
-        margin-top: 1.5em;
+        margin-top: 3em;  /* moved button further down */
         transition: background 0.2s;
     }
+
     .stButton > button:hover {
         background-color: #155a8a;
     }
