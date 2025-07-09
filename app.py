@@ -27,7 +27,7 @@ st.markdown("""
         font-size: 0.95rem;
         font-weight: 500;
         text-align: center;
-        color: #3366cc;  /* blue subtitle */
+        color: #000000;  /* blue subtitle */
         margin-top: -10px;
         margin-bottom: 2.5em;
     }
@@ -43,7 +43,7 @@ st.markdown("""
     .section-header {
         font-size: 1.2rem;
         font-weight: 700;
-        color: #111;
+        color: #111111;
         margin-bottom: 1.5em;
         display: flex;
         align-items: center;
@@ -63,7 +63,7 @@ st.markdown("""
         border: 1px solid #ddd !important;
         border-radius: 8px !important;
         padding: 0.6em 1em !important;
-        background-color: #f9f9f9 !important;
+        background-color: #000000 !important;
         font-size: 1rem;
     }
 
