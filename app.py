@@ -81,7 +81,7 @@ st.markdown("""
         height: 3em;
         font-size: 1.1em;
         font-weight: 600;
-        margin-top: 3em;  /* moved button further down */
+        margin-top: 8em;  
         transition: background 0.2s;
     }
 
@@ -227,7 +227,7 @@ if submitted:
         probability = round(random.uniform(0.05, 0.85), 2)
 
     if probability is not None:
-        st.subheader("📈 Predicted Default Risk")
+        st.subheader("Predicted Default Risk")
         st.write(f"**Probability of Default:** {probability:.2%}")
     else:
         st.warning("Could not compute prediction. Please check your input or model file.")
