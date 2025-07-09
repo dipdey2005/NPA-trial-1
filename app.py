@@ -11,7 +11,59 @@ st.set_page_config(page_title="Default Risk Predictor — NPA Probability", layo
 st.markdown("""
     <style>
     body, .stApp {
-        background-color: #f5f7fa !important;
+        background-color: #eef1f7 !important;
+        font-family: 'Segoe UI', sans-serif;
+    }
+    h1 {
+        font-size: 2.6rem;
+        font-weight: 800;
+        color: #111;
+        text-align: center;
+        margin-bottom: 0.2em;
+    }
+    h4 {
+        font-size: 1rem;
+        font-weight: 500;
+        text-align: center;
+        color: #4472c4;
+        margin-top: -10px;
+        margin-bottom: 2em;
+    }
+    .stContainer {
+        background: white !important;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        padding: 2rem 2rem 2.5rem 2rem;
+        margin: auto;
+    }
+    .section-header {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #111;
+        margin-bottom: 1.5em;
+        display: flex;
+        align-items: center;
+    }
+    .section-header:before {
+        content: '';
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        background: #3366ff;
+        border-radius: 2px;
+        margin-right: 10px;
+    }
+    .stTextInput > div > input, .stSelectbox > div {
+        border: 1px solid #ddd !important;
+        border-radius: 8px !important;
+        padding: 0.6em 1em !important;
+        background-color: #f9fafa !important;
+        font-size: 1rem;
+    }
+    label {
+        font-weight: 600 !important;
+        font-size: 0.95rem !important;
+        color: #333 !important;
     }
     .stButton > button {
         background-color: #1f77b4;
@@ -26,57 +78,6 @@ st.markdown("""
     }
     .stButton > button:hover {
         background-color: #155a8a;
-    }
-    .stTextInput > div > input, .stSelectbox > div {
-        border-radius: 6px !important;
-        padding: 0.5em !important;
-        border: 1px solid #e0e0e0 !important;
-        background: #fafbfc !important;
-        font-size: 1em !important;
-    }
-    .stContainer {
-        background: #fff !important;
-        border-radius: 12px !important;
-        box-shadow: 0 2px 12px #eaeaea !important;
-        padding: 2em 2em 2.5em 2em !important;
-        margin-bottom: 2em !important;
-    }
-    .stForm {
-        margin-top: 1em !important;
-    }
-    h1 {
-        font-size: 2.5em !important;
-        font-weight: 800 !important;
-        margin-bottom: 0.2em !important;
-        color: #222 !important;
-    }
-    h4 {
-        font-size: 1.2em !important;
-        color: #1f77b4 !important;
-        margin-bottom: 1.5em !important;
-        font-weight: 500 !important;
-    }
-    .section-header {
-        font-size: 1.25em !important;
-        font-weight: 700 !important;
-        margin-bottom: 1.5em !important;
-        margin-top: 0.5em !important;
-        color: #222 !important;
-        display: flex;
-        align-items: center;
-    }
-    .section-header:before {
-        content: '';
-        display: inline-block;
-        width: 12px;
-        height: 12px;
-        background: #1f77b4;
-        border-radius: 3px;
-        margin-right: 10px;
-    }
-    label {
-        font-weight: 600 !important;
-        color: #333 !important;
     }
     </style>
 """, unsafe_allow_html=True)
