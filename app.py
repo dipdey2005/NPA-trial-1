@@ -18,7 +18,7 @@ st.markdown("""
     h1 {
         font-size: 2.6rem;
         font-weight: 800;
-        color: #000; /* changed to black */
+        color: #000000; 
         text-align: center;
         margin-bottom: 0.2em;
     }
@@ -27,7 +27,7 @@ st.markdown("""
         font-size: 1rem;
         font-weight: 500;
         text-align: center;
-        color: #000; /* changed to black */
+        color: #000000;
         margin-top: -10px;
         margin-bottom: 2.5em;
     }
