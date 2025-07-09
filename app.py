@@ -150,24 +150,28 @@ if submitted:
     sbi_customer_val = sbi_map.get(sbi_customer, 0)
 
     expected_features = [
-        'Employment Type (0-5) (Government-4, Salaried-3, Self-Employed-2, Pensioner-1 )',
-        'Current Employment Length (Total Years)',
-        'Employment Length (Total Years)',
-        'SBI Customer (1-Yes, 0-No)',
-        'Location Type (Urban-3, Semi-Urban-2, Rural-1)',
-        'Income (PA, PAT) (Rs)',
-        'Total AMIs (other loans) (Rs)',
-        'Debt-to-Income Ratio (After Loan) (%)',
-        'Dependants',
-        'Surplus After EMI/Dependants',
-        'Loan Amt (Rs) (Yearly)',
-        'Loan EMI Tenure (Years)',
-        'CIBIL Score Ranking (850+=10, 800+=9, 750+=8, 700+=7, 650+=6, 600+=5, 550+=4, 450+=3, 400+=2, 300+=1)',
-        'CIBIL Score',
-        'DPD',
-        'Max DPD',
-        'Missed EMIs'
-    ]
+    'Employment Type (0-5) (Government-4, Salaried-3, Self-Employed-2, Pensioner-1 )',
+    'Current Employment Length (Total Years)',
+    'Employment Length (Total Years)',
+    'SBI Customer (1-Yes, 0-No)',
+    'Location Type (Urban-3, Semi-Urban-2, Rural-1)',
+    'Income (PA, PAT) (Rs)',
+    'Total AMIs (other loans) (Rs)',
+    'Debt-to-Income Ratio (After Loan) (%)',
+    'Dependants',
+    'Surplus After EMI/Dependants',
+    'Loan Amt (Rs) (Yearly)',
+    'Loan EMI Tenure (Years)',
+    'CIBIL Score Ranking (850+=10, 800+=9, 750+=8, 700+=7, 650+=6, 600+=5, 550+=4, 450+=3, 400+=2, 300+=1)',
+    'CIBIL Score',
+    'DPD',
+    'Max DPD',
+    'Missed EMIs',
+    'EMI to Income',
+    'Net Disposable Income',
+    'Missed EMI Rate'
+]
+
 
     row = {
         'Employment Type (0-5) (Government-4, Salaried-3, Self-Employed-2, Pensioner-1 )': employment_type_val,
@@ -187,6 +191,9 @@ if submitted:
         'DPD': int(dpd or 0),
         'Max DPD': int(max_dpd or 0),
         'Missed EMIs': int(missed_emis or 0)
+	'EMI to Income': 0,  # Set to 0 or compute if you have the data
+    	'Net Disposable Income': 0,  # Set to 0 or compute if you have the data
+    	'Missed EMI Rate': 0  # Set to 0 or compute if you have the data
     }
 
     X = pd.DataFrame([[row.get(f, 0) for f in expected_features]], columns=expected_features)
