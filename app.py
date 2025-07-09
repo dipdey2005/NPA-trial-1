@@ -18,7 +18,6 @@ st.markdown("""
     h1 {
         font-size: 2.6rem;
         font-weight: 800;
-        color: #000000; 
         text-align: center;
         margin-bottom: 0.2em;
     }
@@ -27,7 +26,6 @@ st.markdown("""
         font-size: 0.95rem;
         font-weight: 500;
         text-align: center;
-        color: #000000;  /* blue subtitle */
         margin-top: -10px;
         margin-bottom: 2.5em;
     }
@@ -98,8 +96,8 @@ model = joblib.load(MODEL_PATH) if os.path.exists(MODEL_PATH) else None
 # ─────────────── HEADER ───────────────
 st.markdown("Welcome to **[Dashboard](#)**", unsafe_allow_html=True)
 st.markdown(
-    "<h1 style='text-align:center;'>Default Risk Predictor — NPA Probability</h1>"
-    "<h4 style='text-align:center;'>Machine Learning Model to compute risk of customer becoming Non-Performing Asset</h4>",
+    "<h1>Default Risk Predictor - NPA Probability</h1>"
+    "<h4>Machine Learning Model to compute risk of customer becoming Non-Performing Asset</h4>",
     unsafe_allow_html=True
 )
 
