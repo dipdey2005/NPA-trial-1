@@ -1,4 +1,4 @@
-import streamlit as st
+import streamlit as st 
 import pandas as pd
 import joblib
 import os
@@ -7,7 +7,7 @@ import random
 # ─────────────── PAGE SETUP ───────────────
 st.set_page_config(page_title="Default Risk Predictor — NPA Probability", layout="wide")
 
-# Custom CSS for light card and form styling
+# ─────────────── CUSTOM CSS ───────────────
 st.markdown("""
     <style>
     body, .stApp {
@@ -24,10 +24,10 @@ st.markdown("""
     }
 
     h4 {
-        font-size: 1rem;
+        font-size: 0.95rem;
         font-weight: 500;
         text-align: center;
-        color: #000000;
+        color: #3366cc;  /* blue subtitle */
         margin-top: -10px;
         margin-bottom: 2.5em;
     }
@@ -36,12 +36,12 @@ st.markdown("""
         background: white !important;
         border-radius: 16px;
         box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-        padding: 2rem 2rem 3rem 2rem;
+        padding: 2rem 2rem 2rem 2rem;
         margin: auto;
     }
 
     .section-header {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
         font-weight: 700;
         color: #111;
         margin-bottom: 1.5em;
@@ -63,7 +63,7 @@ st.markdown("""
         border: 1px solid #ddd !important;
         border-radius: 8px !important;
         padding: 0.6em 1em !important;
-        background-color: #FFFAFA !important;
+        background-color: #f9f9f9 !important;
         font-size: 1rem;
     }
 
@@ -81,7 +81,7 @@ st.markdown("""
         height: 3em;
         font-size: 1.1em;
         font-weight: 600;
-        margin-top: 8em;  
+        margin-top: 2em;
         transition: background 0.2s;
     }
 
@@ -96,6 +96,7 @@ MODEL_PATH = "xgb_model.pkl"
 model = joblib.load(MODEL_PATH) if os.path.exists(MODEL_PATH) else None
 
 # ─────────────── HEADER ───────────────
+st.markdown("Welcome to **[Dashboard](#)**", unsafe_allow_html=True)
 st.markdown(
     "<h1 style='text-align:center;'>Default Risk Predictor — NPA Probability</h1>"
     "<h4 style='text-align:center;'>Machine Learning Model to compute risk of customer becoming Non-Performing Asset</h4>",
@@ -176,7 +177,6 @@ if submitted:
         'Missed EMI Rate'
     ]
 
-    # Engineered features (set to 0 if not enough info)
     try:
         income_val = float(income or 0)
         loan_amount_val = float(loan_amount or 0)
@@ -227,7 +227,7 @@ if submitted:
         probability = round(random.uniform(0.05, 0.85), 2)
 
     if probability is not None:
-        st.subheader("Predicted Default Risk")
+        st.subheader("📈 Predicted Default Risk")
         st.write(f"**Probability of Default:** {probability:.2%}")
     else:
         st.warning("Could not compute prediction. Please check your input or model file.")
