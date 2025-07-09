@@ -4,32 +4,103 @@ import joblib
 import os
 import random
 
-# Set page layout and light color palette
+# --- PAGE CONFIG & COLORS ---
 st.set_page_config(page_title="Default Risk Predictor — NPA Probability", layout="wide")
 ACCENT_BG = "#f5f7fa"
 CARD_BG = "#ffffff"
 PRIMARY_C = "#1f77b4"
 
-# Load model
+# --- CUSTOM CSS FOR FIGMA-LIKE STYLE ---
+st.markdown("""
+    <style>
+    body, .stApp {
+        background-color: #f5f7fa !important;
+    }
+    .main > div {
+        padding-top: 0 !important;
+    }
+    .stButton > button {
+        background-color: #1f77b4;
+        color: white;
+        border-radius: 8px;
+        width: 100%;
+        height: 3em;
+        font-size: 1.1em;
+        font-weight: 600;
+        margin-top: 1em;
+        transition: background 0.2s;
+    }
+    .stButton > button:hover {
+        background-color: #155a8a;
+    }
+    .stTextInput > div > input, .stSelectbox > div {
+        border-radius: 8px !important;
+        padding: 0.6em !important;
+        border: 1px solid #e0e0e0 !important;
+        background: #fafbfc !important;
+        font-size: 1em !important;
+    }
+    .stContainer {
+        background: #fff !important;
+        border-radius: 16px !important;
+        box-shadow: 0 2px 16px #eaeaea !important;
+        padding: 2em 2em 2.5em 2em !important;
+        margin-bottom: 2em !important;
+    }
+    .stForm {
+        margin-top: 1em !important;
+    }
+    h1 {
+        font-size: 2.5em !important;
+        font-weight: 800 !important;
+        margin-bottom: 0.2em !important;
+        color: #222 !important;
+    }
+    h4 {
+        font-size: 1.2em !important;
+        color: #1f77b4 !important;
+        margin-bottom: 1.5em !important;
+        font-weight: 500 !important;
+    }
+    .section-header {
+        font-size: 1.25em !important;
+        font-weight: 700 !important;
+        margin-bottom: 1.5em !important;
+        margin-top: 0.5em !important;
+        color: #222 !important;
+        display: flex;
+        align-items: center;
+    }
+    .section-header:before {
+        content: '';
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        background: #1f77b4;
+        border-radius: 3px;
+        margin-right: 10px;
+    }
+    label {
+        font-weight: 600 !important;
+        color: #333 !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+# --- MODEL LOADING ---
 MODEL_PATH = "xgb_model.pkl"
 model = joblib.load(MODEL_PATH) if os.path.exists(MODEL_PATH) else None
 
-# Title and subtitle
+# --- HEADER ---
 st.markdown(
-    "<h1 style='text-align:center; color:#222;'>Default Risk Predictor — NPA Probability</h1>"
-    "<h4 style='text-align:center; color:#1f77b4;'>Machine Learning Model to compute risk of customer becoming Non-Performing Asset</h4>",
+    "<h1 style='text-align:center;'>Default Risk Predictor — NPA Probability</h1>"
+    "<h4 style='text-align:center;'>Machine Learning Model to compute risk of customer becoming Non-Performing Asset</h4>",
     unsafe_allow_html=True
 )
-st.markdown("<br>", unsafe_allow_html=True)
 
-# Card-style container for the form
+# --- CARD CONTAINER ---
 with st.container():
-    st.markdown(
-        f"<div style='background-color:{CARD_BG}; border-radius:10px; padding:32px; box-shadow:0 2px 8px #eee;'>",
-        unsafe_allow_html=True
-    )
-    st.markdown("### 📝 Applicant Details")
-
+    st.markdown('<div class="section-header">Applicant Details</div>', unsafe_allow_html=True)
     with st.form("prediction_form"):
         col1, col2, col3 = st.columns(3)
 
@@ -68,9 +139,7 @@ with st.container():
 
         submitted = st.form_submit_button("Predict")
 
-    st.markdown("</div>", unsafe_allow_html=True)
-
-# Prediction logic
+# --- PREDICTION LOGIC ---
 if submitted:
     emp_map = {"Government": 4, "Salaried": 3, "Self-Employed": 2, "Pensioner": 1}
     loc_map = {"Rural": 1, "Semi-Urban": 2, "Urban": 3}
@@ -136,18 +205,3 @@ if submitted:
         st.write(f"**Probability of Default:** {probability:.2%}")
     else:
         st.warning("Could not compute prediction. Please check your input or model file.")
-
-# Optional: Light background for the app
-st.markdown(
-    f"""
-    <style>
-        body {{
-            background-color: {ACCENT_BG} !important;
-        }}
-        .stApp {{
-            background-color: {ACCENT_BG} !important;
-        }}
-    </style>
-    """,
-    unsafe_allow_html=True
-)
