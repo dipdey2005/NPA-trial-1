@@ -107,52 +107,33 @@ if submitted:
     ax.tick_params(colors="black")
     st.pyplot(fig, use_container_width=True)
 
-    st.subheader("📊 Key Inputs (scaled)")
-    summary_df = pd.DataFrame({
-        "Parameter": ["Income","Loan Amt","Other AMIs","CIBIL","DPD","Missed EMIs"],
-        "Value":     [income, loan_amount, other_amis, cibil_score, dpd, missed_emis]
-    })
+    # ─────────────  styled list layout  ─────────────
+st.markdown("---")
+st.subheader("🔍 Summary Overview")
 
-    scaled = summary_df.Value / summary_df.Value.max()
-    fig2, ax2 = plt.subplots(figsize=(8,1.6))
-    ax2.barh(summary_df.Parameter, scaled, color=BAR_C)
-    for y,v,orig in zip(summary_df.Parameter, scaled, summary_df.Value):
-        ax2.text(v+0.02, y, f"{orig:,}", va="center", color="black", fontsize=9)
-    ax2.set_xlim(0,1); ax2.set_facecolor(ACCENT_BG); fig2.patch.set_facecolor(ACCENT_BG)
-    ax2.tick_params(colors="black"); ax2.invert_yaxis()
-    for spine in ax2.spines.values():
-        spine.set_edgecolor("black")
-    st.pyplot(fig2, use_container_width=True)
+col1, col2 = st.columns(2)
 
-    st.subheader("🧮 Engineered Features")
-    engineered_df = pd.DataFrame({
-        "Feature": [
-            "EMI to Income", 
-            "Net Disposable Income", 
-            "Missed EMI Rate", 
-            "Debt-to-Income (%)", 
-            "Surplus / Dependant / Mo"
-        ],
-        "Value": [
-            emi_to_income, 
-            net_disposable, 
-            missed_emi_rate, 
-            dti_after_loan_pct, 
-            surplus_per_dep
-        ]
-    })
+with col1:
+    st.markdown("### 📊 Key Inputs")
+    st.markdown(f"""
+    <ul style='list-style-type:none; padding-left:0; font-size:16px; line-height:1.6;'>
+        <li>💰 <b>Income:</b> ₹{income:,}</li>
+        <li>🏦 <b>Loan Amount:</b> ₹{loan_amount:,}</li>
+        <li>📉 <b>Other AMIs:</b> ₹{other_amis:,}</li>
+        <li>🔢 <b>CIBIL Score:</b> {cibil_score}</li>
+        <li>⏱️ <b>DPD (Days):</b> {dpd}</li>
+        <li>❌ <b>Missed EMIs:</b> {missed_emis}</li>
+    </ul>
+    """, unsafe_allow_html=True)
 
-    scaled_e = engineered_df.Value / (engineered_df.Value.abs().max() or 1)
-    fig3, ax3 = plt.subplots(figsize=(8, 1.6))
-    ax3.barh(engineered_df.Feature, scaled_e, color=BAR_C)
-    for y, v, orig in zip(engineered_df.Feature, scaled_e, engineered_df.Value):
-        label = f"{orig:,.2f}" if abs(orig) > 1 else f"{orig:.3f}"
-        ax3.text(v + 0.02, y, label, va="center", color="black", fontsize=9)
-    ax3.set_xlim(0, 1)
-    ax3.set_facecolor(ACCENT_BG)
-    fig3.patch.set_facecolor(ACCENT_BG)
-    ax3.tick_params(colors="black")
-    ax3.invert_yaxis()
-    for spine in ax3.spines.values():
-        spine.set_edgecolor("black")
-    st.pyplot(fig3, use_container_width=True)
+with col2:
+    st.markdown("### 🧮 Engineered Features")
+    st.markdown(f"""
+    <ul style='list-style-type:none; padding-left:0; font-size:16px; line-height:1.6;'>
+        <li>📊 <b>EMI to Income Ratio:</b> {emi_to_income:.2f}</li>
+        <li>💸 <b>Net Disposable Income:</b> ₹{net_disposable:,.2f}</li>
+        <li>📅 <b>Missed EMI Rate:</b> {missed_emi_rate:.2f}</li>
+        <li>📉 <b>Debt-to-Income (%):</b> {dti_after_loan_pct:.2f}%</li>
+        <li>👨‍👩‍👧 <b>Surplus / Dependant / Month:</b> ₹{surplus_per_dep:,.2f}</li>
+    </ul>
+    """, unsafe_allow_html=True)
