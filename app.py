@@ -33,7 +33,7 @@ model = joblib.load(MODEL_PATH) if os.path.exists(MODEL_PATH) else None
 st.sidebar.info("✅ Model loaded" if model else "⚠️ Model not found – using mock outputs")
 
 # ─────────────── HEADER ───────────────
-st.title("🏦 Bank Default Risk Predictor — NPA Probability")
+st.title("Bank Default Risk Predictor — NPA Probability")
 
 # ─────────────── FORM ───────────────
 with st.form("prediction_form"):
