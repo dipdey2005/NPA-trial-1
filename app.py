@@ -4,17 +4,14 @@ import joblib
 import matplotlib.pyplot as plt
 import os, random
 
-# ─────────────── PAGE SETUP ───────────────
 st.set_page_config(page_title="Default Risk Predictor — NPA Probability", layout="wide")
 
-# Light mode colors
 ACCENT_BG = "#ffffff"
 TEXT_COLOR = "#000000"
 PRIMARY_C = "#1f77b4"
 RISK_C    = "#d62728"
 BAR_C     = "#00d491"
 
-# Light theme override CSS
 st.markdown(f"""
     <style>
     html, body, .stApp {{
@@ -27,17 +24,14 @@ st.markdown(f"""
     </style>
 """, unsafe_allow_html=True)
 
-# ─────────────── LOAD MODEL ───────────────
 MODEL_PATH = "xgb_model.pkl"
 model = joblib.load(MODEL_PATH) if os.path.exists(MODEL_PATH) else None
 st.sidebar.info("✅ Model loaded" if model else "⚠️ Model not found – using mock outputs")
 
-# ─────────────── HEADER ───────────────
 st.title("Bank Default Risk Predictor — NPA Probability")
 
-# ─────────────── FORM ───────────────
 with st.form("prediction_form"):
-    st.header("📋 Applicant Details")
+    st.header("Applicant Details")
     c1, c2, c3 = st.columns(3)
 
     with c1:
@@ -63,7 +57,9 @@ with st.form("prediction_form"):
 
     submitted = st.form_submit_button("Predict")
 
-# ─────────────── PREDICTION ───────────────
+
+
+
 if submitted:
     emi_to_income      = (other_amis + loan_amount) / income if income else 0
     net_disposable     = income - other_amis - loan_amount
@@ -96,8 +92,8 @@ if submitted:
     X = pd.DataFrame([row])
     probability = model.predict_proba(X)[0,1] if model else round(random.uniform(0.05, 0.85), 2)
 
-    # ───────────── SLIM BAR ─────────────
-    st.subheader("📈 Predicted Default Risk")
+
+    st.subheader("Predicted Default Risk")
     fig, ax = plt.subplots(figsize=(16, .8))
     ax.barh([""], [probability], color=RISK_C)
     ax.barh([""], [1-probability], left=[probability], color=PRIMARY_C)
@@ -110,8 +106,8 @@ if submitted:
     ax.tick_params(colors=TEXT_COLOR)
     st.pyplot(fig, use_container_width=True)
 
-    # ───────────── INPUT MINI-CHART ─────────────
-    st.subheader("📊 Key Inputs (scaled)")
+ 
+    st.subheader("Key Inputs (scaled)")
     summary_df = pd.DataFrame({
         "Parameter": ["Income", "Loan Amt", "Other AMIs", "CIBIL", "DPD", "Missed EMIs"],
         "Value":     [income, loan_amount, other_amis, cibil_score, dpd, missed_emis]
@@ -130,8 +126,8 @@ if submitted:
         spine.set_edgecolor(TEXT_COLOR)
     st.pyplot(fig2, use_container_width=True)
 
-    # ───────────── ENGINEERED MINI-CHART ─────────────
-    st.subheader("🧮 Engineered Features")
+
+    st.subheader("Engineered Features")
     engineered_df = pd.DataFrame({
         "Feature": [
             "EMI to Income", 
