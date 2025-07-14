@@ -19,7 +19,7 @@ st.markdown(
         color: white;
     }}
     h1, h2, h3, h4, h5, h6, label, p, .stSlider, .stSelectbox, .stNumberInput {{
-        color: white;
+        color: black;
     }}
     </style>""",
     unsafe_allow_html=True
@@ -35,7 +35,7 @@ st.title("Bank Default Risk Predictor — NPA Probability")
 
 #form begins
 with st.form("prediction_form"):
-    st.header("📋 Applicant Details")
+    st.header("Applicant Details")
     c1, c2, c3 = st.columns(3)
 
     with c1:
