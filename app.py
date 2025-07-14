@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import os, random
 
 st.set_page_config(layout="wide")
-ACCENT_BG = "#000000"
+ACCENT_BG = "#111111"
 PRIMARY_C = "#1f77b4"       
 RISK_C    = "#d62728"      
 BAR_C     = "#00d491"     
