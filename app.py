@@ -158,3 +158,56 @@ if submitted:
     for spine in ax3.spines.values():
         spine.set_edgecolor(TEXT_COLOR)
     st.pyplot(fig3, use_container_width=True)
+
+# ─────────────  input‑summary mini‑chart  ─────────────
+    st.subheader("📊 Key Inputs (scaled)")
+    summary_df = pd.DataFrame({
+        "Parameter": ["Income","Loan Amt","Other AMIs","CIBIL","DPD","Missed EMIs"],
+        "Value":     [income, loan_amount, other_amis, cibil_score, dpd, missed_emis]
+    })
+
+    # scale to 0‑1 so small numbers remain visible
+    scaled = summary_df.Value / summary_df.Value.max()
+    fig2, ax2 = plt.subplots(figsize=(8,1.6))      # slim second chart
+    ax2.barh(summary_df.Parameter, scaled, color=BAR_C)
+    for y,v,orig in zip(summary_df.Parameter, scaled, summary_df.Value):
+        ax2.text(v+0.02, y, f"{orig:,}", va="center", color="white", fontsize=9)
+    ax2.set_xlim(0,1); ax2.set_facecolor(ACCENT_BG); fig2.patch.set_facecolor(ACCENT_BG)
+    ax2.tick_params(colors="white"); ax2.invert_yaxis()  # top‑to‑bottom order
+    for spine in ax2.spines.values():
+        spine.set_edgecolor("white")
+    st.pyplot(fig2, use_container_width=True)
+
+     # ─────────────  engineered‑features mini‑chart  ─────────────
+    st.subheader("🧮 Engineered Features")
+    engineered_df = pd.DataFrame({
+        "Feature": [
+            "EMI to Income", 
+            "Net Disposable Income", 
+            "Missed EMI Rate", 
+            "Debt-to-Income (%)", 
+            "Surplus / Dependant / Mo"
+        ],
+        "Value": [
+            emi_to_income, 
+            net_disposable, 
+            missed_emi_rate, 
+            dti_after_loan_pct, 
+            surplus_per_dep
+        ]
+    })
+
+    scaled_e = engineered_df.Value / (engineered_df.Value.abs().max() or 1)
+    fig3, ax3 = plt.subplots(figsize=(8, 1.6))
+    ax3.barh(engineered_df.Feature, scaled_e, color=BAR_C)
+    for y, v, orig in zip(engineered_df.Feature, scaled_e, engineered_df.Value):
+        label = f"{orig:,.2f}" if abs(orig) > 1 else f"{orig:.3f}"
+        ax3.text(v + 0.02, y, label, va="center", color="white", fontsize=9)
+    ax3.set_xlim(0, 1)
+    ax3.set_facecolor(ACCENT_BG)
+    fig3.patch.set_facecolor(ACCENT_BG)
+    ax3.tick_params(colors="white")
+    ax3.invert_yaxis()
+    for spine in ax3.spines.values():
+        spine.set_edgecolor("white")
+    st.pyplot(fig3, use_container_width=True)
