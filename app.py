@@ -25,7 +25,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-#model loading
+#model load
 MODEL_PATH = "xgb_model.pkl"
 model = joblib.load(MODEL_PATH) if os.path.exists(MODEL_PATH) else None
 st.sidebar.info("Model loaded" if model else "Model not found – mock output")
@@ -114,12 +114,12 @@ if submitted:
 
 
     scaled = summary_df.Value / summary_df.Value.max()
-    fig2, ax2 = plt.subplots(figsize=(8,1.6))      # slim second chart
+    fig2, ax2 = plt.subplots(figsize=(8,1.6))     
     ax2.barh(summary_df.Parameter, scaled, color=BAR_C)
     for y,v,orig in zip(summary_df.Parameter, scaled, summary_df.Value):
         ax2.text(v+0.02, y, f"{orig:,}", va="center", color="white", fontsize=9)
     ax2.set_xlim(0,1); ax2.set_facecolor(ACCENT_BG); fig2.patch.set_facecolor(ACCENT_BG)
-    ax2.tick_params(colors="white"); ax2.invert_yaxis()  # top‑to‑bottom order
+    ax2.tick_params(colors="white"); ax2.invert_yaxis() 
     for spine in ax2.spines.values():
         spine.set_edgecolor("white")
     st.pyplot(fig2, use_container_width=True)
