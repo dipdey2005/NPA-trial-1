@@ -152,8 +152,8 @@ ax.pie(
     labels=["Total Income"],
     colors=outer_colors,
     labeldistance=1.2,
-    textprops={'fontsize': 14, 'color': 'white', 'fontwidth': 5},
-    wedgeprops=dict(width=0.15, edgecolor='white')
+    textprops={'fontsize': 14, 'color': 'white'},
+    wedgeprops=dict(width=0.15, edgecolor='#dddddd')
 )
 
 # Inner ring
@@ -165,7 +165,7 @@ wedges, texts = ax.pie(
     labeldistance=0.8,
     startangle=90,
     textprops={'fontsize': 10, 'color': 'white'},
-    wedgeprops=dict(width=0.3, edgecolor='white')
+    wedgeprops=dict(width=0.3, edgecolor='#dddddd')
 )
 
 ax.set(aspect="equal")
