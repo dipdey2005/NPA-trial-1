@@ -185,5 +185,21 @@ st.markdown("<div style='display: flex; justify-content: center;'>", unsafe_allo
 st.pyplot(fig)
 st.markdown("</div>", unsafe_allow_html=True)
 
+st.markdown("### 📌 Other Applicant Metrics")
+
+other_metrics_df = pd.DataFrame({
+    "Metric": ["Co-applicant Income", "Guarantor Income", "Dependants", "Applicant Age"],
+    "Value": [coapplicant_income, guarantor_income, dependants, age]
+})
+
+# Use Streamlit's dataframe styling to center-align
+st.dataframe(
+    other_metrics_df.style.set_table_styles([
+        {'selector': 'th', 'props': [('text-align', 'center')]},
+        {'selector': 'td', 'props': [('text-align', 'center')]}
+    ]).set_properties(**{'text-align': 'center'}),
+    use_container_width=False,
+    height=200
+)
 
 
