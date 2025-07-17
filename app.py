@@ -215,12 +215,10 @@ st.markdown("<br>", unsafe_allow_html=True)
 
 # Display Metrics and Features After Submission
 st.markdown("---")
-st.markdown("### 🔍 Key Financial Metrics")
+st.markdown(Key Financial Metrics")
 
 if submitted:
-    # 🟢 PIE CHART DISPLAYED EARLIER
-
-    # 💡 Summary Metrics
+   
     col1, col2, col3 = st.columns(3)
     with col1:
         st.markdown(f"<div style='text-align:center;font-size:18px;'>Missed EMI Rate<br><span style='color:#00d491;'>₹{missed_emi_rate:.2%}</span></div>", unsafe_allow_html=True)
@@ -229,27 +227,63 @@ if submitted:
     with col3:
         st.markdown(f"<div style='text-align:center;font-size:18px;'>Surplus / Dependant<br><span style='color:#00d491;'>₹{surplus_per_dep:,.0f}</span></div>", unsafe_allow_html=True)
 
-    st.markdown("### 📌 Financial Breakdown Table")
+ table_data = {
+    "Metric": ["Monthly Income", "Loan EMI", "Other Payments", "Remaining Surplus", "EMI-to-Income %", "DTI After Loan"],
+    "Value": [f"₹{income:,}", f"₹{loan_amount:,}", f"₹{other_amis:,}", f"₹{net_disposable:,}",
+              f"{emi_to_income * 100:.2f}%", f"{dti_after_loan_pct:.2f}%"]
+}
+
+table_html = """
+<style>
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #000000;
+    color: white;
+    font-size: 16px;
+}
+.custom-table th, .custom-table td {
+    border: 1px solid white;
+    padding: 8px;
+    text-align: center;
+}
+.custom-table th {
+    background-color: #111111;
+    font-weight: bold;
+}
+</style>
+
+<table class="custom-table">
+    <tr><th>Metric</th><th>Value</th></tr>
+"""
+
+for m, v in zip(table_data["Metric"], table_data["Value"]):
+    table_html += f"<tr><td>{m}</td><td>{v}</td></tr>"
+
+table_html += "</table>"
+
+st.markdown("Financial Breakdown Table")
+st.markdown(table_html, unsafe_allow_html=True)
+
     st.dataframe(pd.DataFrame({
         "Metric": ["Monthly Income", "Loan EMI", "Other Payments", "Remaining Surplus", "EMI-to-Income %", "DTI After Loan"],
         "Value": [f"₹{income:,}", f"₹{loan_amount:,}", f"₹{other_amis:,}", f"₹{net_disposable:,}",
                   f"{emi_to_income * 100:.2f}%", f"{dti_after_loan_pct:.2f}%"]
     }))
 
-    st.markdown("### 🧠 Engineered Features")
+    st.markdown("Engineered Features")
     eng_col1, eng_col2 = st.columns(2)
     with eng_col1:
-        st.markdown("#### 📊 Financial Ratios")
+        st.markdown("Financial Ratios")
         st.markdown("- EMI-to-Income Ratio")
         st.markdown("- Debt-to-Income % After Loan")
         st.markdown("- Surplus per Dependent")
     with eng_col2:
-        st.markdown("#### 👤 Applicant Behavior")
+        st.markdown("Applicant Behavior")
         st.markdown("- Missed EMI Rate")
         st.markdown("- Net Disposable Income")
         st.markdown("- Tenure-to-Income Ratio")
 
 else:
-    # 🔴 Fallback View
     st.info("⚠️ Submit the form above to view financial metrics, risk breakdowns, and predictions.")
 
