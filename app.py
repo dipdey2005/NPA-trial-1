@@ -45,8 +45,9 @@ MODEL_PATH = "xgb_model.pkl"
 model = joblib.load(MODEL_PATH) if os.path.exists(MODEL_PATH) else None
 st.sidebar.success("✅ Model loaded" if model else "⚠️ Model not found")
 
-\n\n
-\n\n
+st.markdown("<br>", unsafe_allow_html=True)
+st.markdown("<br>", unsafe_allow_html=True)
+
 
 st.title("Bank Default Risk Predictor")
 st.caption("Estimate probability of loan default using applicant details")
