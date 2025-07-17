@@ -51,7 +51,7 @@ st.markdown("<br>", unsafe_allow_html=True)
 
 st.title("Bank Default Risk Predictor")
 st.markdown(
-    "<p style='font-size:14px; color:#dddddd; font-weight:normal;'>Estimate probability of loan default using applicant details</p>",
+    "<p style='font-size:20px; color:#dddddd; font-weight:normal;'>Estimate probability of loan default using applicant details</p>",
     unsafe_allow_html=True
 )
 st.markdown("---")
