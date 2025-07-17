@@ -265,14 +265,14 @@ table_html += "</table>"
 st.markdown("### 📌 Financial Breakdown Table")
 st.markdown(table_html, unsafe_allow_html=True)
 
-    st.markdown("Engineered Features")
-    eng_col1, eng_col2 = st.columns(2)
-    with eng_col1:
+st.markdown("Engineered Features")
+eng_col1, eng_col2 = st.columns(2)
+with eng_col1:
         st.markdown("Financial Ratios")
         st.markdown("- EMI-to-Income Ratio")
         st.markdown("- Debt-to-Income % After Loan")
         st.markdown("- Surplus per Dependent")
-    with eng_col2:
+with eng_col2:
         st.markdown("Applicant Behavior")
         st.markdown("- Missed EMI Rate")
         st.markdown("- Net Disposable Income")
