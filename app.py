@@ -279,11 +279,11 @@ else:
 if submitted:
     risk_level = ""
     risk_color = ""
-    
-    if pred_prob < 0.32:
+
+    if probability < 0.32:
         risk_level = "Low Risk"
         risk_color = "#00d47a"
-    elif 0.32 <= pred_prob <= 0.68:
+    elif 0.32 <= probability <= 0.68:
         risk_level = "Medium Risk"
         risk_color = "#f0ad4e"
     else:
@@ -293,11 +293,11 @@ if submitted:
     st.markdown(
         f"""
         <div style='padding:20px; background-color:{risk_color}; border-radius:10px; text-align:center; color:white; font-size:22px; font-weight:bold;'>
-            Predicted Default Risk: {pred_prob:.2%} <br> Risk Category: {risk_level}
+            Predicted Default Risk: {probability:.2%} <br> Risk Category: {risk_level}
         </div>
-        """, unsafe_allow_html=True
+        """,
+        unsafe_allow_html=True
     )
-
     st.caption("Calculated using a machine learning model trained on historical borrower behavior and reverse-plotted to simplify interpretation.")
 else:
     st.info("⚠️ Submit the form above to assess risk levels for the applicant.")
