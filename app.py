@@ -152,6 +152,9 @@ if submitted:
     ax.text(probability / 2, 0, f"{probability:.0%}", va="center", ha="center", color="white", fontweight="bold")
     ax.tick_params(colors="white")
     st.pyplot(fig, use_container_width=True)
+    
+st.markdown("<br>", unsafe_allow_html=True)
+st.markdown("<br>", unsafe_allow_html=True)
 
 st.subheader("Income Allocation with Total Yearly Loan Amount")
 
