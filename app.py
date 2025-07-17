@@ -151,30 +151,29 @@ total_loan_label = f"Total Yearly Amt Post Loan\n₹{total_loan_related:,.0f}"
 
 fig, ax = plt.subplots(figsize=(6, 6))
 
-# Outer ring - full income
+# Outer ring
 ax.pie(
     [1],
     radius=1.1,
     labels=["Total Income"],
     colors=outer_colors,
-    labeldistance=0.8,
-    textprops={'fontsize': 12, 'color': 'white'},
+    labeldistance=1.4,
+    textprops={'fontsize': 12, 'color': 'white', fontweight='bold'},
     wedgeprops=dict(width=0.15, edgecolor='white')
 )
 
-# Inner ring - breakdown
+# Inner ring
 ax.pie(
     sizes,
     radius=0.95,
     labels=labels,
     colors=inner_colors,
-    labeldistance=1.15,
+    labeldistance=1.0,
     startangle=90,
-    textprops={'fontsize': 11, 'color': 'white'},
+    textprops={'fontsize': 11, 'color': 'white', fontweight='bold'},
     wedgeprops=dict(width=0.3, edgecolor='white')
 )
 
-# Add annotation in the center donut hole
 ax.text(0, 0, total_loan_label,
         ha='center', va='center',
         fontsize=11, fontweight='bold', color='white')
@@ -182,7 +181,6 @@ ax.text(0, 0, total_loan_label,
 ax.set(aspect="equal")
 fig.patch.set_facecolor(ACCENT_BG)
 
-# Display in Streamlit
 st.markdown("<div style='display: flex; justify-content: center;'>", unsafe_allow_html=True)
 st.pyplot(fig)
 st.markdown("</div>", unsafe_allow_html=True)
