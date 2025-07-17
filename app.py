@@ -129,9 +129,8 @@ if submitted:
     ax.tick_params(colors="white")
     st.pyplot(fig, use_container_width=True)
 
-st.markdown("### 🥧 Income Allocation Breakdown")
+st.markdown("Income Allocation Breakdown")
 
-# --- Calculate proportions ---
 loan_share = loan_amount / income if income else 0
 amis_share = other_amis / income if income else 0
 surplus_share = max(0, 1 - loan_share - amis_share)
@@ -145,21 +144,19 @@ sizes = [loan_share, amis_share, surplus_share]
 inner_colors = [RISK_C, BAR_C, PRIMARY_C]
 outer_colors = [ACCENT_BG]
 
-# --- Create concentric pie chart ---
 fig, ax = plt.subplots(figsize=(5.5, 5.5))
-
-# Outer ring: full income circle
+# Outer ring
 ax.pie(
     [1],  # 100%
     radius=1.1,
     labels=["Total Income"],
     colors=outer_colors,
-    labeldistance=1.1,
-    textprops={'fontsize': 12, 'color': 'white'},
+    labeldistance=1.2,
+    textprops={'fontsize': 14, 'color': 'white'},
     wedgeprops=dict(width=0.15, edgecolor='white')
 )
 
-# Inner ring: breakdown of income
+# Inner ring
 wedges, texts = ax.pie(
     sizes,
     radius=0.95,
@@ -167,19 +164,16 @@ wedges, texts = ax.pie(
     colors=inner_colors,
     labeldistance=0.8,
     startangle=90,
-    textprops={'fontsize': 11, 'color': 'white'},
+    textprops={'fontsize': 10, 'color': 'white'},
     wedgeprops=dict(width=0.3, edgecolor='white')
 )
 
-# Equal aspect ratio ensures perfect circle
 ax.set(aspect="equal")
 fig.patch.set_facecolor(ACCENT_BG)
 
-# Center in Streamlit
 st.markdown("<div style='display: flex; justify-content: center;'>", unsafe_allow_html=True)
 st.pyplot(fig)
 st.markdown("</div>", unsafe_allow_html=True)
-
 
 
 
