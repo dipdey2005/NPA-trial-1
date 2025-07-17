@@ -129,48 +129,60 @@ if submitted:
     ax.tick_params(colors="white")
     st.pyplot(fig, use_container_width=True)
 
-st.markdown("Income Allocation Breakdown")
+st.markdown("### 🥧 Income Allocation with Total Yearly Loan Amount")
 
+# --- Compute breakdown ---
 loan_share = loan_amount / income if income else 0
 amis_share = other_amis / income if income else 0
 surplus_share = max(0, 1 - loan_share - amis_share)
 
+sizes = [loan_share, amis_share, surplus_share]
 labels = [
     f"Loan: ₹{loan_amount:,.0f} ({loan_share*100:.1f}%)",
     f"Yearly Loan Payments: ₹{other_amis:,.0f} ({amis_share*100:.1f}%)",
     f"Surplus: ₹{surplus_share * income:,.0f} ({surplus_share*100:.1f}%)"
 ]
-sizes = [loan_share, amis_share, surplus_share]
 inner_colors = [RISK_C, BAR_C, PRIMARY_C]
 outer_colors = [ACCENT_BG]
 
-fig, ax = plt.subplots(figsize=(5.5, 5.5))
-# Outer ring
+# --- Total Post Loan Amount ---
+total_loan_related = loan_amount + other_amis
+total_loan_label = f"Total Yearly Amt Post Loan\n₹{total_loan_related:,.0f}"
+
+fig, ax = plt.subplots(figsize=(6, 6))
+
+# Outer ring - full income
 ax.pie(
-    [1],  # 100%
+    [1],
     radius=1.1,
     labels=["Total Income"],
     colors=outer_colors,
-    labeldistance=1.2,
-    textprops={'fontsize': 14, 'color': 'white'},
-    wedgeprops=dict(width=0.15, edgecolor='#dddddd')
+    labeldistance=0.8,
+    textprops={'fontsize': 12, 'color': 'white'},
+    wedgeprops=dict(width=0.15, edgecolor='white')
 )
 
-# Inner ring
-wedges, texts = ax.pie(
+# Inner ring - breakdown
+ax.pie(
     sizes,
     radius=0.95,
     labels=labels,
     colors=inner_colors,
-    labeldistance=0.8,
+    labeldistance=1.15,
     startangle=90,
-    textprops={'fontsize': 10, 'color': 'white'},
-    wedgeprops=dict(width=0.3, edgecolor='#dddddd')
+    textprops={'fontsize': 11, 'color': 'white'},
+    wedgeprops=dict(width=0.3, edgecolor='white')
 )
+
+# Add annotation in the center donut hole
+ax.text(0, 0, total_loan_label,
+        ha='center', va='center',
+        fontsize=11, fontweight='bold', color='white')
 
 ax.set(aspect="equal")
 fig.patch.set_facecolor(ACCENT_BG)
 
+# Display in Streamlit
 st.markdown("<div style='display: flex; justify-content: center;'>", unsafe_allow_html=True)
 st.pyplot(fig)
 st.markdown("</div>", unsafe_allow_html=True)
