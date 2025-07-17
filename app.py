@@ -129,29 +129,45 @@ if submitted:
     ax.tick_params(colors="white")
     st.pyplot(fig, use_container_width=True)
 
-  # --- Pie Chart with Labels + Values ---
+# --- Financial Breakdown with Concentric Circles ---
 st.markdown("### 🥧 Financial Breakdown")
 
-labels = [
-    f"Net Income: ₹{income:,.0f}",
-    f"Loan Amount: ₹{loan_amount:,.0f}",
-    f"Total Yearly Loan Payments: ₹{other_amis:,.0f}"
-]
-sizes = [income, loan_amount, other_amis]
-colors = [PRIMARY_C, RISK_C, BAR_C]
+outer_labels = [f"Annual Income: ₹{income:,.0f}"]
+inner_labels = [f"Loan: ₹{loan_amount:,.0f}", f"Total Yearly Loan Payments: ₹{other_amis:,.0f}"]
 
-fig_pie, ax_pie = plt.subplots(figsize=(6, 6))
-wedges, texts, autotexts = ax_pie.pie(
-    sizes,
-    labels=labels,
-    autopct='%1.1f%%',
+outer_sizes = [1]  # Full circle
+inner_sizes = [loan_amount / income, other_amis / income] if income else [0, 0]
+
+fig, ax = plt.subplots(figsize=(4, 4))  # Smaller chart
+# Outer circle
+ax.pie(
+    outer_sizes,
+    radius=1,
+    labels=outer_labels,
+    labeldistance=0.7,
+    colors=[PRIMARY_C],
     startangle=90,
-    colors=colors,
-    textprops={'color': "white"}
+    wedgeprops=dict(width=0.3, edgecolor='white'),
+    textprops={'color': 'white', 'fontsize': 12}
 )
-ax_pie.axis('equal')
-fig_pie.patch.set_facecolor(ACCENT_BG)
-st.pyplot(fig_pie)
+
+# Inner ring (loan breakdown)
+ax.pie(
+    inner_sizes,
+    radius=0.7,
+    labels=inner_labels,
+    labeldistance=0.7,
+    colors=[RISK_C, BAR_C],
+    startangle=90,
+    wedgeprops=dict(width=0.3, edgecolor='white'),
+    textprops={'color': 'white', 'fontsize': 12}
+)
+
+ax.set(aspect="equal")
+fig.patch.set_facecolor(ACCENT_BG)
+st.markdown("<div style='display: flex; justify-content: center;'>", unsafe_allow_html=True)
+st.pyplot(fig)
+st.markdown("</div>", unsafe_allow_html=True)
 
 # --- Narrow, Centered Table for Other Metrics ---
 st.markdown("### 📋 Other Applicant Metrics")
@@ -160,7 +176,6 @@ metrics_table = pd.DataFrame({
     "Value": [cibil_score, cibil_rank, dpd, max_dpd, missed_emis, loan_tenure]
 })
 
-# Styling using HTML for center alignment
 styled_table = metrics_table.to_html(index=False, justify="center", border=0, classes="centered-table")
 st.markdown(
     f"""
@@ -183,8 +198,7 @@ st.markdown(
 )
 
 # --- Engineered Features ---
-st.markdown("Engineered Financial Indicators")
-
+st.markdown("### 🧠 Engineered Financial Indicators")
 
 st.write("**EMI to Income Ratio**")
 st.progress(min(emi_to_income, 1.0))
