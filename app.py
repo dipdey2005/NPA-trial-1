@@ -211,26 +211,25 @@ fig.patch.set_facecolor(ACCENT_BG)
 st.markdown("<div style='display: flex; justify-content: center;'>", unsafe_allow_html=True)
 st.pyplot(fig)
 st.markdown("</div>", unsafe_allow_html=True)
-
-# Add after pie chart section
-
-# ---------- 1. Key Financial Metrics Table -----------
 st.markdown("<br>", unsafe_allow_html=True)
-st.markdown("### 📊 Key Financial Metrics", unsafe_allow_html=True)
 
-key_metrics = {
+if submitted: 
+    
+    st.markdown("### 📊 Key Financial Metrics", unsafe_allow_html=True)
+
+    key_metrics = {
     "Net Monthly Income": f"₹{income/12:,.0f}",
     "Loan EMI (Yearly)": f"₹{loan_amount:,.0f}",
     "Other Yearly Loan Payments": f"₹{other_amis:,.0f}",
     "Surplus (Post Loan)": f"₹{net_disposable:,.0f}",
     "Debt-to-Income Ratio": f"{dti_after_loan_pct:.1f}%",
-}
+    }
 
-metrics_df = pd.DataFrame.from_dict(key_metrics, orient='index', columns=["Value"])
-metrics_df.index.name = "Metric"
-metrics_df.reset_index(inplace=True)
+    metrics_df = pd.DataFrame.from_dict(key_metrics, orient='index', columns=["Value"])
+    metrics_df.index.name = "Metric"
+    metrics_df.reset_index(inplace=True)
 
-st.dataframe(
+    st.dataframe(
     metrics_df.style.set_properties(**{
         'background-color': '#1c1e23',
         'color': 'white',
@@ -241,9 +240,9 @@ st.dataframe(
         [{'selector': 'th', 'props': [('text-align', 'center'), ('font-size', '15px'), ('color', 'white')]}]
     ),
     use_container_width=True
-)
+    )
 
-# ---------- 2. Summary Text Metrics --------------
+
 st.markdown("---")
 st.markdown("### 📌 Summary Metrics", unsafe_allow_html=True)
 
@@ -301,3 +300,6 @@ for idx, feature in enumerate(engineered_features):
             """,
             unsafe_allow_html=True
         )
+else:
+    st.markdown("### 🔍 Key Financial Metrics")
+    st.info("⚠️ Submit the form above to view financial metrics and loan insights.")
