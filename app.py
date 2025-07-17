@@ -215,7 +215,7 @@ st.markdown("<br>", unsafe_allow_html=True)
 
 # Display Metrics and Features After Submission
 st.markdown("---")
-st.markdown(Key Financial Metrics")
+st.markdown("Key Financial Metrics")
 
 if submitted:
    
