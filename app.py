@@ -230,8 +230,7 @@ if submitted:
  table_data = {
     "Metric": ["Monthly Income", "Loan EMI", "Other Payments", "Remaining Surplus", "EMI-to-Income %", "DTI After Loan"],
     "Value": [f"₹{income:,}", f"₹{loan_amount:,}", f"₹{other_amis:,}", f"₹{net_disposable:,}",
-              f"{emi_to_income * 100:.2f}%", f"{dti_after_loan_pct:.2f}%"]
-}
+              f"{emi_to_income * 100:.2f}%", f"{dti_after_loan_pct:.2f}%"]}
 
 table_html = """
 <style>
