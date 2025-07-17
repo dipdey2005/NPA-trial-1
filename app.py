@@ -161,13 +161,10 @@ amis_share = other_amis / income if income else 0
 surplus_share = max(0, 1 - loan_share - amis_share)
 
 sizes = [loan_share, amis_share, surplus_share]
-labels1 = [
+labels = [
     f"Loan: ₹{loan_amount:,.0f} ({loan_share*100:.1f}%)",
     f"Yearly Loan Payments: ₹{other_amis:,.0f} ({amis_share*100:.1f}%)",
     f"Surplus: ₹{surplus_share * income:,.0f} ({surplus_share*100:.1f}%)"
-]
-labels2 = [
-    f"Total Income: ₹{iccome:,.0f}"
 ]
 
 inner_colors = [RISK_C, BAR_C, PRIMARY_C]
@@ -182,7 +179,7 @@ fig, ax = plt.subplots(figsize=(6, 6))
 ax.pie(
     [1],
     radius=1.1,
-    labels=labels2,
+    labels="Income",
     colors=outer_colors,
     labeldistance=1.1,
     textprops={'fontsize': 12, 'color': 'white', 'fontweight': 'bold'},
@@ -193,7 +190,7 @@ ax.pie(
 ax.pie(
     sizes,
     radius=0.95,
-    labels=labels1,
+    labels=labels,
     colors=inner_colors,
     labeldistance=1.25,
     startangle=90,
