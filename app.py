@@ -213,93 +213,43 @@ st.pyplot(fig)
 st.markdown("</div>", unsafe_allow_html=True)
 st.markdown("<br>", unsafe_allow_html=True)
 
-if submitted: 
-    
-    st.markdown("### 📊 Key Financial Metrics", unsafe_allow_html=True)
-
-    key_metrics = {
-    "Net Monthly Income": f"₹{income/12:,.0f}",
-    "Loan EMI (Yearly)": f"₹{loan_amount:,.0f}",
-    "Other Yearly Loan Payments": f"₹{other_amis:,.0f}",
-    "Surplus (Post Loan)": f"₹{net_disposable:,.0f}",
-    "Debt-to-Income Ratio": f"{dti_after_loan_pct:.1f}%",
-    }
-
-    metrics_df = pd.DataFrame.from_dict(key_metrics, orient='index', columns=["Value"])
-    metrics_df.index.name = "Metric"
-    metrics_df.reset_index(inplace=True)
-
-    st.dataframe(
-    metrics_df.style.set_properties(**{
-        'background-color': '#1c1e23',
-        'color': 'white',
-        'border-color': '#343a40',
-        'text-align': 'center',
-        'font-size': '14px'
-    }).set_table_styles(
-        [{'selector': 'th', 'props': [('text-align', 'center'), ('font-size', '15px'), ('color', 'white')]}]
-    ),
-    use_container_width=True
-    )
-
-
+# Display Metrics and Features After Submission
 st.markdown("---")
-st.markdown("### 📌 Summary Metrics", unsafe_allow_html=True)
+st.markdown("### 🔍 Key Financial Metrics")
 
-col1, col2, col3 = st.columns(3)
-with col1:
-    st.markdown("""
-        <div style='text-align: center; font-size:16px;'>
-        📉 <b>Missed EMI Rate</b><br><span style='color:#ff6b6b;'>
-        {:.2f}%
-        </span></div>
-    """.format(missed_emi_rate * 100), unsafe_allow_html=True)
+if submitted:
+    # 🟢 PIE CHART DISPLAYED EARLIER
 
-with col2:
-    st.markdown("""
-        <div style='text-align: center; font-size:16px;'>
-        💰 <b>Net Disposable Income</b><br><span style='color:#00d491;'>
-        ₹{:,}
-        </span></div>
-    """.format(int(net_disposable)), unsafe_allow_html=True)
+    # 💡 Summary Metrics
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.markdown(f"<div style='text-align:center;font-size:18px;'>Missed EMI Rate<br><span style='color:#00d491;'>₹{missed_emi_rate:.2%}</span></div>", unsafe_allow_html=True)
+    with col2:
+        st.markdown(f"<div style='text-align:center;font-size:18px;'>Net Disposable Income<br><span style='color:#00d491;'>₹{net_disposable:,.0f}</span></div>", unsafe_allow_html=True)
+    with col3:
+        st.markdown(f"<div style='text-align:center;font-size:18px;'>Surplus / Dependant<br><span style='color:#00d491;'>₹{surplus_per_dep:,.0f}</span></div>", unsafe_allow_html=True)
 
-with col3:
-    st.markdown("""
-        <div style='text-align: center; font-size:16px;'>
-        👨‍👩‍👧 <b>Surplus per Dependant</b><br><span style='color:#1f77b4;'>
-        ₹{:,}
-        </span></div>
-    """.format(int(surplus_per_dep)), unsafe_allow_html=True)
+    st.markdown("### 📌 Financial Breakdown Table")
+    st.dataframe(pd.DataFrame({
+        "Metric": ["Monthly Income", "Loan EMI", "Other Payments", "Remaining Surplus", "EMI-to-Income %", "DTI After Loan"],
+        "Value": [f"₹{income:,}", f"₹{loan_amount:,}", f"₹{other_amis:,}", f"₹{net_disposable:,}",
+                  f"{emi_to_income * 100:.2f}%", f"{dti_after_loan_pct:.2f}%"]
+    }))
 
-# ---------- 3. Engineered Features Grid -----------
-st.markdown("---")
-st.markdown("### 🧐 Engineered Features", unsafe_allow_html=True)
+    st.markdown("### 🧠 Engineered Features")
+    eng_col1, eng_col2 = st.columns(2)
+    with eng_col1:
+        st.markdown("#### 📊 Financial Ratios")
+        st.markdown("- EMI-to-Income Ratio")
+        st.markdown("- Debt-to-Income % After Loan")
+        st.markdown("- Surplus per Dependent")
+    with eng_col2:
+        st.markdown("#### 👤 Applicant Behavior")
+        st.markdown("- Missed EMI Rate")
+        st.markdown("- Net Disposable Income")
+        st.markdown("- Tenure-to-Income Ratio")
 
-engineered_features = [
-    "EMI-to-Income Ratio",
-    "Total Years in Employment",
-    "DPD Spread",
-    "Max DPD",
-    "Missed EMIs",
-    "CIBIL Tier",
-    "Debt Service Ratio",
-    "Applicant Risk Tier",
-    "Surplus / Dependant",
-    "Existing Loans"
-]
-
-feat_cols = st.columns(5)
-for idx, feature in enumerate(engineered_features):
-    with feat_cols[idx % 5]:
-        st.markdown(
-            f"""
-            <div style='background-color: #2c3037; padding: 10px; border-radius: 8px; 
-                        text-align: center; margin: 5px; box-shadow: 1px 1px 3px rgba(0,0,0,0.2);'>
-                <span style='font-size: 13px; font-weight: 500;'>{feature}</span>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
 else:
-    st.markdown("### 🔍 Key Financial Metrics")
-    st.info("⚠️ Submit the form above to view financial metrics and loan insights.")
+    # 🔴 Fallback View
+    st.info("⚠️ Submit the form above to view financial metrics, risk breakdowns, and predictions.")
+
