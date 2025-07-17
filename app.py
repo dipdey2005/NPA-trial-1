@@ -90,7 +90,7 @@ with st.form("prediction_form"):
         max_dpd     = st.slider("Max DPD (days)", 0, 1000, 0, 10)
         missed_emis = st.slider("Missed EMIs", 0, 60, 0)
 
-    submitted = st.form_submit_button("🔮 Predict Default Risk")
+    submitted = st.form_submit_button("Predict Default Risk")
 
 if submitted:
     emi_to_income      = (other_amis + loan_amount) / income if income else 0
