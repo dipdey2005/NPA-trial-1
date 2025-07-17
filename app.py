@@ -133,11 +133,11 @@ if submitted:
 st.markdown("### 🥧 Financial Breakdown")
 
 labels = [
-    f"Net Income: ₹{net_income:,.0f}",
+    f"Net Income: ₹{income:,.0f}",
     f"Loan Amount: ₹{loan_amount:,.0f}",
     f"Total Yearly Loan Payments: ₹{other_amis:,.0f}"
 ]
-sizes = [net_income, loan_amount, other_amis]
+sizes = [income, loan_amount, other_amis]
 colors = [PRIMARY_C, RISK_C, BAR_C]
 
 fig_pie, ax_pie = plt.subplots(figsize=(6, 6))
