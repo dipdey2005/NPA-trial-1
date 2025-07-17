@@ -183,17 +183,17 @@ st.markdown(
 )
 
 # --- Engineered Features ---
-st.markdown("### Engineered Financial Indicators")
+st.markdown("Engineered Financial Indicators")
 
 
-    st.write("**EMI to Income Ratio**")
-    st.progress(min(emi_to_income, 1.0))
-    st.caption(f"{emi_to_income:.2f}")
+st.write("**EMI to Income Ratio**")
+st.progress(min(emi_to_income, 1.0))
+st.caption(f"{emi_to_income:.2f}")
 
-    st.write("**Debt-to-Income (%)**")
-    st.progress(min(dti_after_loan_pct / 100, 1.0))
-    st.caption(f"{dti_after_loan_pct:.2f}%")
+st.write("**Debt-to-Income (%)**")
+st.progress(min(dti_after_loan_pct / 100, 1.0))
+st.caption(f"{dti_after_loan_pct:.2f}%")
 
-    st.write(f"**Missed EMI Rate**: `{missed_emi_rate:.2f}`")
-    st.write(f"**Net Disposable Income**: `₹{net_disposable:,.0f}`")
-    st.write(f"**Surplus / Dependant / Month**: `₹{surplus_per_dep:,.0f}`")
+st.write(f"**Missed EMI Rate**: `{missed_emi_rate:.2f}`")
+st.write(f"**Net Disposable Income**: `₹{net_disposable:,.0f}`")
+st.write(f"**Surplus / Dependant / Month**: `₹{surplus_per_dep:,.0f}`")
