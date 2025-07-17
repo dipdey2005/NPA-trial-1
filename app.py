@@ -47,7 +47,7 @@ if model:
     st.sidebar.markdown(
         """
         <div style="background-color: black; padding: 10px; border-radius: 5px;">
-            <span style="color: white; font-size: 16px;">✅ Model loaded</span>
+            <span style="color: white; font-size: 16px;">✅ Model Loaded</span>
         </div>
         """,
         unsafe_allow_html=True
@@ -56,13 +56,14 @@ else:
     st.sidebar.markdown(
         """
         <div style="background-color: #ffcccb; padding: 10px; border-radius: 5px;">
-            <span style="color: black; font-size: 16px;">⚠️ Model not found</span>
+            <span style="color: black; font-size: 16px;">⚠️ Model Not Found</span>
         </div>
         """,
         unsafe_allow_html=True
     )
 
-
+st.markdown("<br>", unsafe_allow_html=True)
+st.markdown("<br>", unsafe_allow_html=True)
 
 st.markdown(
     "<div style='text-align: center; font-weight:bold; font-size:40px; color: white'>"
