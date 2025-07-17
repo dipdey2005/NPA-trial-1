@@ -265,12 +265,6 @@ table_html += "</table>"
 st.markdown("### 📌 Financial Breakdown Table")
 st.markdown(table_html, unsafe_allow_html=True)
 
-    st.dataframe(pd.DataFrame({
-        "Metric": ["Monthly Income", "Loan EMI", "Other Payments", "Remaining Surplus", "EMI-to-Income %", "DTI After Loan"],
-        "Value": [f"₹{income:,}", f"₹{loan_amount:,}", f"₹{other_amis:,}", f"₹{net_disposable:,}",
-                  f"{emi_to_income * 100:.2f}%", f"{dti_after_loan_pct:.2f}%"]
-    }))
-
     st.markdown("Engineered Features")
     eng_col1, eng_col2 = st.columns(2)
     with eng_col1:
