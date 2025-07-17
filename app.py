@@ -3,8 +3,8 @@ import pandas as pd
 import joblib
 import matplotlib.pyplot as plt
 import os, random
-\n
-\n
+\n\n
+\n\n
 st.set_page_config(layout="wide", page_title="Default Risk Predictor")
 ACCENT_BG = "#0d1117"
 PRIMARY_C = "#1f77b4"
