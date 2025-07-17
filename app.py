@@ -129,45 +129,39 @@ if submitted:
     ax.tick_params(colors="white")
     st.pyplot(fig, use_container_width=True)
 
-# --- Financial Breakdown with Concentric Circles ---
-st.markdown("### 🥧 Financial Breakdown")
+# --- Updated Financial Pie Chart: Income Breakdown ---
+st.markdown("### 🥧 Income Allocation Pie Chart")
 
-outer_labels = [f"Annual Income: ₹{income:,.0f}"]
-inner_labels = [f"Loan: ₹{loan_amount:,.0f}", f"Total Yearly Loan Payments: ₹{other_amis:,.0f}"]
+# Calculate shares
+loan_share = loan_amount / income if income else 0
+amis_share = other_amis / income if income else 0
+surplus_share = 1 - loan_share - amis_share if income else 0
 
-outer_sizes = [1]  # Full circle
-inner_sizes = [loan_amount / income, other_amis / income] if income else [0, 0]
+labels = [
+    f"Loan: ₹{loan_amount:,.0f} ({loan_share*100:.1f}%)",
+    f"Total Yearly Loan Payments: ₹{other_amis:,.0f} ({amis_share*100:.1f}%)",
+    f"Surplus: ₹{surplus_share * income:,.0f} ({surplus_share*100:.1f}%)"
+]
 
-fig, ax = plt.subplots(figsize=(4, 4))  # Smaller chart
-# Outer circle
+sizes = [loan_share, amis_share, surplus_share]
+colors = [RISK_C, BAR_C, PRIMARY_C]
+
+fig, ax = plt.subplots(figsize=(5, 5))
 ax.pie(
-    outer_sizes,
-    radius=1,
-    labels=outer_labels,
-    labeldistance=0.7,
-    colors=[PRIMARY_C],
+    sizes,
+    labels=labels,
+    autopct=None,
+    colors=colors,
     startangle=90,
-    wedgeprops=dict(width=0.3, edgecolor='white'),
-    textprops={'color': 'white', 'fontsize': 12}
+    wedgeprops=dict(edgecolor='white')
 )
-
-# Inner ring (loan breakdown)
-ax.pie(
-    inner_sizes,
-    radius=0.7,
-    labels=inner_labels,
-    labeldistance=0.7,
-    colors=[RISK_C, BAR_C],
-    startangle=90,
-    wedgeprops=dict(width=0.3, edgecolor='white'),
-    textprops={'color': 'white', 'fontsize': 12}
-)
-
 ax.set(aspect="equal")
 fig.patch.set_facecolor(ACCENT_BG)
+
 st.markdown("<div style='display: flex; justify-content: center;'>", unsafe_allow_html=True)
 st.pyplot(fig)
 st.markdown("</div>", unsafe_allow_html=True)
+
 
 # --- Narrow, Centered Table for Other Metrics ---
 st.markdown("### 📋 Other Applicant Metrics")
