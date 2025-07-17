@@ -215,7 +215,7 @@ st.markdown("</div>", unsafe_allow_html=True)
 st.markdown("<br>", unsafe_allow_html=True)
 
 st.markdown("---")
-st.markdown("Key Financial Metrics")
+st.subheader("Key Financial Metrics")
 
 if submitted:
 
@@ -265,13 +265,13 @@ if submitted:
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown("<br>", unsafe_allow_html=True)
     
-    st.markdown("Financial Breakdown Table")
+    st.subheader("Financial Breakdown Table")
     st.markdown(table_html, unsafe_allow_html=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown("<br>", unsafe_allow_html=True)
 
-    st.markdown("Engineered Features")
+    st.subheader("Engineered Features")
     eng_col1, eng_col2 = st.columns(2)
     with eng_col1:
         st.markdown("**Financial Ratios**")
