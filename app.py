@@ -43,10 +43,25 @@ st.markdown(
 
 MODEL_PATH = "xgb_model.pkl"
 model = joblib.load(MODEL_PATH) if os.path.exists(MODEL_PATH) else None
-st.sidebar.success("✅ Model loaded" if model else "⚠️ Model not found")
+if model:
+    st.sidebar.markdown(
+        """
+        <div style="background-color: black; padding: 10px; border-radius: 5px;">
+            <span style="color: white; font-size: 16px;">✅ Model loaded</span>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+else:
+    st.sidebar.markdown(
+        """
+        <div style="background-color: #ffcccb; padding: 10px; border-radius: 5px;">
+            <span style="color: black; font-size: 16px;">⚠️ Model not found</span>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
-st.markdown("<br>", unsafe_allow_html=True)
-st.markdown("<br>", unsafe_allow_html=True)
 
 
 st.markdown(
