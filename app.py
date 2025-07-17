@@ -271,9 +271,10 @@ if submitted:
 
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown("<br>", unsafe_allow_html=True)
-# Warning System Section
-st.markdown("---")
-st.markdown("#Warning System")
+
+else:
+    st.info("⚠️ Submit the form above to view financial metrics, risk breakdowns, and predictions.")
+
 
 if submitted:
     risk_level = ""
