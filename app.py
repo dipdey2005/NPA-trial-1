@@ -137,7 +137,7 @@ if submitted:
     ax.tick_params(colors="white")
     st.pyplot(fig, use_container_width=True)
 
-st.markdown("Income Allocation with Total Yearly Loan Amount")
+st.subheader("Income Allocation with Total Yearly Loan Amount")
 
 
 loan_share = loan_amount / income if income else 0
