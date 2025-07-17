@@ -151,7 +151,7 @@ fig, ax = plt.subplots(figsize=(5.5, 5.5))
 # Outer ring: full income circle
 ax.pie(
     [1],  # 100%
-    radius=1.1,
+    radius=1.3,
     labels=["Total Income"],
     colors=outer_colors,
     labeldistance=0.8,
@@ -162,7 +162,7 @@ ax.pie(
 # Inner ring: breakdown of income
 wedges, texts = ax.pie(
     sizes,
-    radius=0.95,
+    radius=0.85,
     labels=labels,
     colors=inner_colors,
     labeldistance=1.1,
