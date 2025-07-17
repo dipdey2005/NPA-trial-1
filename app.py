@@ -45,7 +45,7 @@ st.markdown(
 # --- Model Load ---
 MODEL_PATH = "xgb_model.pkl"
 model = joblib.load(MODEL_PATH) if os.path.exists(MODEL_PATH) else None
-st.sidebar.success("✅ Model loaded" if model else "⚠️ Model not found – using mock predictions")
+st.sidebar.success("✅ Model loaded" if model else "⚠️ Model not found")
 
 # --- Header ---
 st.title("🏦 Bank Default Risk Predictor")
@@ -129,38 +129,57 @@ if submitted:
     ax.tick_params(colors="white")
     st.pyplot(fig, use_container_width=True)
 
-# --- Updated Financial Pie Chart: Income Breakdown ---
-st.markdown("### 🥧 Income Allocation Pie Chart")
+st.markdown("### 🥧 Income Allocation Breakdown")
 
-# Calculate shares
+# --- Calculate proportions ---
 loan_share = loan_amount / income if income else 0
 amis_share = other_amis / income if income else 0
-surplus_share = 1 - loan_share - amis_share if income else 0
+surplus_share = max(0, 1 - loan_share - amis_share)
 
 labels = [
     f"Loan: ₹{loan_amount:,.0f} ({loan_share*100:.1f}%)",
-    f"Total Yearly Loan Payments: ₹{other_amis:,.0f} ({amis_share*100:.1f}%)",
+    f"Yearly Loan Payments: ₹{other_amis:,.0f} ({amis_share*100:.1f}%)",
     f"Surplus: ₹{surplus_share * income:,.0f} ({surplus_share*100:.1f}%)"
 ]
-
 sizes = [loan_share, amis_share, surplus_share]
-colors = [RISK_C, BAR_C, PRIMARY_C]
+inner_colors = [RISK_C, BAR_C, PRIMARY_C]
+outer_colors = [ACCENT_BG]
 
-fig, ax = plt.subplots(figsize=(5, 5))
+# --- Create concentric pie chart ---
+fig, ax = plt.subplots(figsize=(5.5, 5.5))
+
+# Outer ring: full income circle
 ax.pie(
-    sizes,
-    labels=labels,
-    autopct=None,
-    colors=colors,
-    startangle=90,
-    wedgeprops=dict(edgecolor='white')
+    [1],  # 100%
+    radius=1.1,
+    labels=["Total Income"],
+    colors=outer_colors,
+    labeldistance=0.8,
+    textprops={'fontsize': 12, 'color': 'white'},
+    wedgeprops=dict(width=0.15, edgecolor='white')
 )
+
+# Inner ring: breakdown of income
+wedges, texts = ax.pie(
+    sizes,
+    radius=0.95,
+    labels=labels,
+    colors=inner_colors,
+    labeldistance=1.1,
+    startangle=90,
+    textprops={'fontsize': 11, 'color': 'white'},
+    wedgeprops=dict(width=0.3, edgecolor='white')
+)
+
+# Equal aspect ratio ensures perfect circle
 ax.set(aspect="equal")
 fig.patch.set_facecolor(ACCENT_BG)
 
+# Center in Streamlit
 st.markdown("<div style='display: flex; justify-content: center;'>", unsafe_allow_html=True)
 st.pyplot(fig)
 st.markdown("</div>", unsafe_allow_html=True)
+
 
 
 # --- Narrow, Centered Table for Other Metrics ---
