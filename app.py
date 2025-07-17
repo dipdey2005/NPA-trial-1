@@ -179,7 +179,7 @@ fig, ax = plt.subplots(figsize=(6, 6))
 ax.pie(
     [1],
     radius=1.1,
-    labels="Income",
+    labels=["Total Income"],
     colors=outer_colors,
     labeldistance=1.1,
     textprops={'fontsize': 12, 'color': 'white', 'fontweight': 'bold'},
