@@ -4,7 +4,6 @@ import joblib
 import matplotlib.pyplot as plt
 import os, random
 
-# --- Styling ---
 st.set_page_config(layout="wide", page_title="Default Risk Predictor")
 ACCENT_BG = "#0d1117"
 PRIMARY_C = "#1f77b4"
@@ -42,18 +41,15 @@ st.markdown(
     """, unsafe_allow_html=True
 )
 
-# --- Model Load ---
 MODEL_PATH = "xgb_model.pkl"
 model = joblib.load(MODEL_PATH) if os.path.exists(MODEL_PATH) else None
 st.sidebar.success("✅ Model loaded" if model else "⚠️ Model not found")
 
-# --- Header ---
-st.title("🏦 Bank Default Risk Predictor")
+st.title("Bank Default Risk Predictor")
 st.caption("Estimate probability of loan default using applicant details")
 
 st.markdown("---")
 
-# --- Form Layout ---
 with st.form("prediction_form"):
     st.subheader("👤 Applicant Information")
     c1, c2, c3 = st.columns(3)
@@ -83,7 +79,6 @@ with st.form("prediction_form"):
 
     submitted = st.form_submit_button("🔮 Predict Default Risk")
 
-# --- Prediction Logic ---
 if submitted:
     emi_to_income      = (other_amis + loan_amount) / income if income else 0
     net_disposable     = income - other_amis - loan_amount
@@ -118,7 +113,7 @@ if submitted:
     probability = model.predict_proba(X)[0, 1] if model else round(random.uniform(0.05, 0.85), 2)
 
     st.markdown("---")
-    st.subheader("📉 Predicted Default Probability")
+    st.subheader("Predicted Default Probability")
     fig, ax = plt.subplots(figsize=(16, .8))        
     ax.barh([""], [probability], color=RISK_C)
     ax.barh([""], [1 - probability], left=[probability], color=PRIMARY_C)
@@ -129,9 +124,9 @@ if submitted:
     ax.tick_params(colors="white")
     st.pyplot(fig, use_container_width=True)
 
-st.markdown("### 🥧 Income Allocation with Total Yearly Loan Amount")
+st.markdown("Income Allocation with Total Yearly Loan Amount")
 
-# --- Compute breakdown ---
+
 loan_share = loan_amount / income if income else 0
 amis_share = other_amis / income if income else 0
 surplus_share = max(0, 1 - loan_share - amis_share)
@@ -145,7 +140,6 @@ labels = [
 inner_colors = [RISK_C, BAR_C, PRIMARY_C]
 outer_colors = [ACCENT_BG]
 
-# --- Total Post Loan Amount ---
 total_loan_related = loan_amount + other_amis
 total_loan_label = f"Total Loan Amt Post Loan\n₹{total_loan_related:,.0f}"
 
@@ -185,14 +179,13 @@ st.markdown("<div style='display: flex; justify-content: center;'>", unsafe_allo
 st.pyplot(fig)
 st.markdown("</div>", unsafe_allow_html=True)
 
-st.markdown("### 📌 Other Applicant Metrics")
+st.markdown("Other Applicant Metrics")
 
 other_metrics_df = pd.DataFrame({
     "Metric": ["Co-applicant Income", "Guarantor Income", "Dependants", "Applicant Age"],
     "Value": [coapplicant_income, guarantor_income, dependants, age]
 })
 
-# Use Streamlit's dataframe styling to center-align
 st.dataframe(
     other_metrics_df.style.set_table_styles([
         {'selector': 'th', 'props': [('text-align', 'center')]},
