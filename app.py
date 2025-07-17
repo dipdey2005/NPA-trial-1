@@ -50,8 +50,10 @@ st.markdown("<br>", unsafe_allow_html=True)
 
 
 st.title("Bank Default Risk Predictor")
-st.caption("Estimate probability of loan default using applicant details")
-
+st.markdown(
+    "<p style='font-size:14px; color:#dddddd; font-weight:normal;'>Estimate probability of loan default using applicant details</p>",
+    unsafe_allow_html=True
+)
 st.markdown("---")
 
 with st.form("prediction_form"):
