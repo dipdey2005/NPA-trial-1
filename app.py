@@ -64,7 +64,7 @@ st.markdown(
 st.markdown("---")
 
 with st.form("prediction_form"):
-    st.subheader("👤 Applicant Information")
+    st.subheader("Applicant Information")
     c1, c2, c3 = st.columns(3)
 
     with c1:
