@@ -129,46 +129,74 @@ if submitted:
     ax.tick_params(colors="white")
     st.pyplot(fig, use_container_width=True)
 
-    # --- Visual Summary Section ---
-st.markdown("---")
-st.subheader("📊 Financial Breakdown")
+  # --- Pie Chart with Labels + Values ---
+st.markdown("### 🥧 Financial Breakdown")
 
-# --- Pie Chart for Income vs Loan Components ---
-labels = ['Net Income (after loan & AMIs)', 'Loan Amount', 'Total Yearly Loan Payments']
-loan_total = loan_amount + other_amis
-net_income = income - loan_total
+labels = [
+    f"Net Income: ₹{net_income:,.0f}",
+    f"Loan Amount: ₹{loan_amount:,.0f}",
+    f"Total Yearly Loan Payments: ₹{other_amis:,.0f}"
+]
 sizes = [net_income, loan_amount, other_amis]
 colors = [PRIMARY_C, RISK_C, BAR_C]
 
 fig_pie, ax_pie = plt.subplots(figsize=(6, 6))
-ax_pie.pie(sizes, labels=labels, autopct='%1.1f%%', colors=colors, startangle=90)
+wedges, texts, autotexts = ax_pie.pie(
+    sizes,
+    labels=labels,
+    autopct='%1.1f%%',
+    startangle=90,
+    colors=colors,
+    textprops={'color': "white"}
+)
 ax_pie.axis('equal')
 fig_pie.patch.set_facecolor(ACCENT_BG)
 st.pyplot(fig_pie)
 
-# --- Table: Other Key Metrics ---
+# --- Narrow, Centered Table for Other Metrics ---
 st.markdown("### 📋 Other Applicant Metrics")
 metrics_table = pd.DataFrame({
-    "Metric": ["CIBIL Score", "DPD (days)", "Max DPD (days)", "Missed EMIs", "CIBIL Rank", "Loan Tenure (yrs)"],
-    "Value": [cibil_score, dpd, max_dpd, missed_emis, cibil_rank, loan_tenure]
+    "Metric": ["CIBIL Score", "CIBIL Rank", "DPD (days)", "Max DPD", "Missed EMIs", "Loan Tenure (yrs)"],
+    "Value": [cibil_score, cibil_rank, dpd, max_dpd, missed_emis, loan_tenure]
 })
-st.dataframe(metrics_table.set_index("Metric"), use_container_width=True)
 
-# --- Engineered Features as Progress Bars ---
+# Styling using HTML for center alignment
+styled_table = metrics_table.to_html(index=False, justify="center", border=0, classes="centered-table")
+st.markdown(
+    f"""
+    <style>
+    .centered-table {{
+        margin-left: auto;
+        margin-right: auto;
+        color: white;
+        background-color: {ACCENT_BG};
+        font-size: 16px;
+    }}
+    .centered-table th, .centered-table td {{
+        padding: 6px 14px;
+        text-align: center;
+        border: none;
+    }}
+    </style>
+    {styled_table}
+    """, unsafe_allow_html=True
+)
+
+# --- Engineered Features ---
 st.markdown("### 🧠 Engineered Financial Indicators")
 
-def display_progress(label, value, max_val):
-    pct = min(value / max_val, 1.0) if max_val else 0
-    st.write(f"**{label}**")
-    st.progress(pct)
-    st.caption(f"Value: `{value:,.2f}`")
+col1, col2 = st.columns(2)
 
-cols = st.columns(2)
-with cols[0]:
-    display_progress("EMI to Income Ratio", emi_to_income, 1.0)
-    display_progress("Missed EMI Rate", missed_emi_rate, 10)
-    display_progress("Debt-to-Income (%)", dti_after_loan_pct, 100)
+with col1:
+    st.write("**EMI to Income Ratio**")
+    st.progress(min(emi_to_income, 1.0))
+    st.caption(f"{emi_to_income:.2f}")
 
-with cols[1]:
-    display_progress("Net Disposable Income", net_disposable, 20_00_000)
-    display_progress("Surplus / Dependant / Month", surplus_per_dep, 25_000)
+    st.write("**Debt-to-Income (%)**")
+    st.progress(min(dti_after_loan_pct / 100, 1.0))
+    st.caption(f"{dti_after_loan_pct:.2f}%")
+
+with col2:
+    st.write(f"**Missed EMI Rate**: `{missed_emi_rate:.2f}`")
+    st.write(f"**Net Disposable Income**: `₹{net_disposable:,.0f}`")
+    st.write(f"**Surplus / Dependant / Month**: `₹{surplus_per_dep:,.0f}`")
