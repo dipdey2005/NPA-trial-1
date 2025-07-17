@@ -129,53 +129,46 @@ if submitted:
     ax.tick_params(colors="white")
     st.pyplot(fig, use_container_width=True)
 
-    # Summary Visualizations
-    st.markdown("---")
-    c1, c2 = st.columns(2)
+    # --- Visual Summary Section ---
+st.markdown("---")
+st.subheader("📊 Financial Breakdown")
 
-    with c1:
-        st.subheader("📊 Key Metrics")
-        summary_df = pd.DataFrame({
-            "Parameter": ["Income", "Loan Amt", "Other AMIs", "CIBIL", "DPD", "Missed EMIs"],
-            "Value": [income, loan_amount, other_amis, cibil_score, dpd, missed_emis]
-        })
-        scaled = summary_df.Value / summary_df.Value.max()
-        fig2, ax2 = plt.subplots(figsize=(7, 1.6))     
-        ax2.barh(summary_df.Parameter, scaled, color=BAR_C)
-        for y, v, orig in zip(summary_df.Parameter, scaled, summary_df.Value):
-            ax2.text(v + 0.02, y, f"{orig:,}", va="center", color="white", fontsize=9)
-        ax2.set_xlim(0, 1); ax2.set_facecolor(ACCENT_BG); fig2.patch.set_facecolor(ACCENT_BG)
-        ax2.tick_params(colors="white"); ax2.invert_yaxis()
-        for spine in ax2.spines.values():
-            spine.set_edgecolor("white")
-        st.pyplot(fig2, use_container_width=True)
+# --- Pie Chart for Income vs Loan Components ---
+labels = ['Net Income (after loan & AMIs)', 'Loan Amount', 'Total Yearly Loan Payments']
+loan_total = loan_amount + other_amis
+net_income = income - loan_total
+sizes = [net_income, loan_amount, other_amis]
+colors = [PRIMARY_C, RISK_C, BAR_C]
 
-    with c2:
-        st.subheader("🧠 Engineered Features")
-        engineered_df = pd.DataFrame({
-            "Feature": [
-                "EMI to Income", 
-                "Net Disposable Income", 
-                "Missed EMI Rate", 
-                "Debt-to-Income (%)", 
-                "Surplus / Dependant / Mo"
-            ],
-            "Value": [
-                emi_to_income, 
-                net_disposable, 
-                missed_emi_rate, 
-                dti_after_loan_pct, 
-                surplus_per_dep
-            ]
-        })
-        scaled_e = engineered_df.Value / (engineered_df.Value.abs().max() or 1)
-        fig3, ax3 = plt.subplots(figsize=(7, 1.6))
-        ax3.barh(engineered_df.Feature, scaled_e, color=BAR_C)
-        for y, v, orig in zip(engineered_df.Feature, scaled_e, engineered_df.Value):
-            label = f"{orig:,.2f}" if abs(orig) > 1 else f"{orig:.3f}"
-            ax3.text(v + 0.02, y, label, va="center", color="white", fontsize=9)
-        ax3.set_xlim(0, 1); ax3.set_facecolor(ACCENT_BG); fig3.patch.set_facecolor(ACCENT_BG)
-        ax3.tick_params(colors="white"); ax3.invert_yaxis()
-        for spine in ax3.spines.values():
-            spine.set_edgecolor("white")
-        st.pyplot(fig3, use_container_width=True)
+fig_pie, ax_pie = plt.subplots(figsize=(6, 6))
+ax_pie.pie(sizes, labels=labels, autopct='%1.1f%%', colors=colors, startangle=90)
+ax_pie.axis('equal')
+fig_pie.patch.set_facecolor(ACCENT_BG)
+st.pyplot(fig_pie)
+
+# --- Table: Other Key Metrics ---
+st.markdown("### 📋 Other Applicant Metrics")
+metrics_table = pd.DataFrame({
+    "Metric": ["CIBIL Score", "DPD (days)", "Max DPD (days)", "Missed EMIs", "CIBIL Rank", "Loan Tenure (yrs)"],
+    "Value": [cibil_score, dpd, max_dpd, missed_emis, cibil_rank, loan_tenure]
+})
+st.dataframe(metrics_table.set_index("Metric"), use_container_width=True)
+
+# --- Engineered Features as Progress Bars ---
+st.markdown("### 🧠 Engineered Financial Indicators")
+
+def display_progress(label, value, max_val):
+    pct = min(value / max_val, 1.0) if max_val else 0
+    st.write(f"**{label}**")
+    st.progress(pct)
+    st.caption(f"Value: `{value:,.2f}`")
+
+cols = st.columns(2)
+with cols[0]:
+    display_progress("EMI to Income Ratio", emi_to_income, 1.0)
+    display_progress("Missed EMI Rate", missed_emi_rate, 10)
+    display_progress("Debt-to-Income (%)", dti_after_loan_pct, 100)
+
+with cols[1]:
+    display_progress("Net Disposable Income", net_disposable, 20_00_000)
+    display_progress("Surplus / Dependant / Month", surplus_per_dep, 25_000)
