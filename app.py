@@ -151,10 +151,10 @@ fig, ax = plt.subplots(figsize=(5.5, 5.5))
 # Outer ring: full income circle
 ax.pie(
     [1],  # 100%
-    radius=1.3,
+    radius=1.1,
     labels=["Total Income"],
     colors=outer_colors,
-    labeldistance=0.8,
+    labeldistance=1.1,
     textprops={'fontsize': 12, 'color': 'white'},
     wedgeprops=dict(width=0.15, edgecolor='white')
 )
@@ -162,10 +162,10 @@ ax.pie(
 # Inner ring: breakdown of income
 wedges, texts = ax.pie(
     sizes,
-    radius=0.85,
+    radius=0.95,
     labels=labels,
     colors=inner_colors,
-    labeldistance=1.1,
+    labeldistance=0.8,
     startangle=90,
     textprops={'fontsize': 11, 'color': 'white'},
     wedgeprops=dict(width=0.3, edgecolor='white')
@@ -179,6 +179,7 @@ fig.patch.set_facecolor(ACCENT_BG)
 st.markdown("<div style='display: flex; justify-content: center;'>", unsafe_allow_html=True)
 st.pyplot(fig)
 st.markdown("</div>", unsafe_allow_html=True)
+
 
 
 
