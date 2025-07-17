@@ -147,7 +147,7 @@ outer_colors = [ACCENT_BG]
 
 # --- Total Post Loan Amount ---
 total_loan_related = loan_amount + other_amis
-total_loan_label = f"Total Yearly Amt Post Loan\n₹{total_loan_related:,.0f}"
+total_loan_label = f"Total Loan Amt Post Loan\n₹{total_loan_related:,.0f}"
 
 fig, ax = plt.subplots(figsize=(6, 6))
 
@@ -157,7 +157,7 @@ ax.pie(
     radius=1.1,
     labels=["Total Income"],
     colors=outer_colors,
-    labeldistance=1.4,
+    labeldistance=1.25,
     textprops={'fontsize': 12, 'color': 'white', 'fontweight': 'bold'},
     wedgeprops=dict(width=0.15, edgecolor='white')
 )
@@ -168,7 +168,7 @@ ax.pie(
     radius=0.95,
     labels=labels,
     colors=inner_colors,
-    labeldistance=1.0,
+    labeldistance=1.15,
     startangle=90,
     textprops={'fontsize': 11, 'color': 'white', 'fontweight': 'bold'},
     wedgeprops=dict(width=0.3, edgecolor='white')
