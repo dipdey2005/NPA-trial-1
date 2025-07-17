@@ -50,15 +50,14 @@ st.markdown("<br>", unsafe_allow_html=True)
 
 
 st.markdown(
-    "<div style='text-align: center; font-weight:bold; font-size:40px; color: #444;'>"
+    "<div style='text-align: center; font-weight:bold; font-size:40px; color: #444'>"
     "Bank Default Risk Predictor"
     "</div>",
     unsafe_allow_html=True
 )
 st.markdown(
-    "<div style='text-align: center; font-size:18px; color: #444;'>"
+    "<div style='text-align: center; font-size:18px; color: #444'>"
     "Estimate probability of loan default using applicant details"
-<br>"
     "</div>",
     unsafe_allow_html=True
 )
