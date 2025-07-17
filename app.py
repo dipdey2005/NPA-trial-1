@@ -158,7 +158,7 @@ ax.pie(
     labels=["Total Income"],
     colors=outer_colors,
     labeldistance=1.4,
-    textprops={'fontsize': 12, 'color': 'white', fontweight='bold'},
+    textprops={'fontsize': 12, 'color': 'white', 'fontweight': 'bold'},
     wedgeprops=dict(width=0.15, edgecolor='white')
 )
 
@@ -170,7 +170,7 @@ ax.pie(
     colors=inner_colors,
     labeldistance=1.0,
     startangle=90,
-    textprops={'fontsize': 11, 'color': 'white', fontweight='bold'},
+    textprops={'fontsize': 11, 'color': 'white', 'fontweight': 'bold'},
     wedgeprops=dict(width=0.3, edgecolor='white')
 )
 
