@@ -155,6 +155,7 @@ if submitted:
     
 st.markdown("<br>", unsafe_allow_html=True)
 st.markdown("<br>", unsafe_allow_html=True)
+st.markdown("<br>", unsafe_allow_html=True)
 
 st.subheader("Income Allocation with Total Yearly Loan Amount")
 
@@ -213,7 +214,6 @@ st.pyplot(fig)
 st.markdown("</div>", unsafe_allow_html=True)
 st.markdown("<br>", unsafe_allow_html=True)
 
-# Display Metrics and Features After Submission
 st.markdown("---")
 st.markdown("Key Financial Metrics")
 
@@ -262,10 +262,16 @@ if submitted:
 
     table_html += "</table>"
 
-    st.markdown("### 📌 Financial Breakdown Table")
+    st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    st.markdown("Financial Breakdown Table")
     st.markdown(table_html, unsafe_allow_html=True)
 
-    st.markdown("### 🔍 Engineered Features")
+    st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    st.markdown("Engineered Features")
     eng_col1, eng_col2 = st.columns(2)
     with eng_col1:
         st.markdown("**Financial Ratios**")
