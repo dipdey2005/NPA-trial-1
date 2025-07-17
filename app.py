@@ -227,10 +227,11 @@ if submitted:
     with col3:
         st.markdown(f"<div style='text-align:center;font-size:18px;'>Surplus / Dependant<br><span style='color:#00d491;'>₹{surplus_per_dep:,.0f}</span></div>", unsafe_allow_html=True)
 
- table_data = {
+table_data = {
     "Metric": ["Monthly Income", "Loan EMI", "Other Payments", "Remaining Surplus", "EMI-to-Income %", "DTI After Loan"],
     "Value": [f"₹{income:,}", f"₹{loan_amount:,}", f"₹{other_amis:,}", f"₹{net_disposable:,}",
-              f"{emi_to_income * 100:.2f}%", f"{dti_after_loan_pct:.2f}%"]}
+              f"{emi_to_income * 100:.2f}%", f"{dti_after_loan_pct:.2f}%"]
+}
 
 table_html = """
 <style>
@@ -261,7 +262,7 @@ for m, v in zip(table_data["Metric"], table_data["Value"]):
 
 table_html += "</table>"
 
-st.markdown("Financial Breakdown Table")
+st.markdown("### 📌 Financial Breakdown Table")
 st.markdown(table_html, unsafe_allow_html=True)
 
     st.dataframe(pd.DataFrame({
