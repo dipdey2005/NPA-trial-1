@@ -215,7 +215,8 @@ st.markdown("</div>", unsafe_allow_html=True)
 st.markdown("<br>", unsafe_allow_html=True)
 
 st.markdown("---")
-st.subheader("Key Financial Metrics")
+st.subheader("Key Financial Metrics") 
+st.markdown("<br>", unsafe_allow_html=True)
 
 if submitted:
 
@@ -270,20 +271,32 @@ if submitted:
 
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown("<br>", unsafe_allow_html=True)
+# Warning System Section
+st.markdown("---")
+st.markdown("#Warning System")
 
-    st.subheader("Engineered Features")
-    eng_col1, eng_col2 = st.columns(2)
-    with eng_col1:
-        st.markdown("**Financial Ratios**")
-        st.markdown("- EMI-to-Income Ratio")
-        st.markdown("- Debt-to-Income % After Loan")
-        st.markdown("- Surplus per Dependent")
-    with eng_col2:
-        st.markdown("**Applicant Behavior**")
-        st.markdown("- Missed EMI Rate")
-        st.markdown("- Net Disposable Income")
-        st.markdown("- Tenure-to-Income Ratio")
+if submitted:
+    risk_level = ""
+    risk_color = ""
+    
+    if pred_prob < 0.32:
+        risk_level = "Low Risk"
+        risk_color = "#00d47a"
+    elif 0.32 <= pred_prob <= 0.68:
+        risk_level = "Medium Risk"
+        risk_color = "#f0ad4e"
+    else:
+        risk_level = "High Risk"
+        risk_color = "#ff4c4c"
 
+    st.markdown(
+        f"""
+        <div style='padding:20px; background-color:{risk_color}; border-radius:10px; text-align:center; color:white; font-size:22px; font-weight:bold;'>
+            Predicted Default Risk: {pred_prob:.2%} <br> Risk Category: {risk_level}
+        </div>
+        """, unsafe_allow_html=True
+    )
+
+    st.caption("Calculated using a machine learning model trained on historical borrower behavior and reverse-plotted to simplify interpretation.")
 else:
-    st.info("⚠️ Submit the form above to view financial metrics, risk breakdowns, and predictions.")
-
+    st.info("⚠️ Submit the form above to assess risk levels for the applicant.")
